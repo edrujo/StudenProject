@@ -7,8 +7,8 @@
     <ProjectGuid>{4D5B66A0-8B24-468C-A663-4A8EC3EF662F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StudentProject</RootNamespace>
-    <AssemblyName>StudentProject</AssemblyName>
+    <RootNamespace>Truextend.Test.StudentProject</RootNamespace>
+    <AssemblyName>Truextend.Test.StudentProject</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
