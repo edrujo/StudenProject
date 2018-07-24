@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\CSVStudentAdapter.cs" />
+    <Compile Include="Adapters\IAdapter.cs" />
+    <Compile Include="Adapters\IStudentAdapter.cs" />
+    <Compile Include="BLL\StudentBLL.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Program.cs" />

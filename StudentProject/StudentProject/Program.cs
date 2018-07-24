@@ -25,9 +25,7 @@ namespace Truextend.Test.StudentProject
             try
             {
                 StudentController controller = new StudentController(args.ToList());
-
                 controller.Search();
-
             }
             catch (Exception ex)
             {

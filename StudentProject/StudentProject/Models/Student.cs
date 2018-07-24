@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Truextend.Test.StudentProject.Models
             this.Type = type;
             this.Name = name;
             this.Gender = gender;
-            this.LastUpdate = DateTime.Parse(lastUpdate);
+            this.LastUpdate = DateTime.ParseExact(lastUpdate.Trim(), "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
         }
 
     }

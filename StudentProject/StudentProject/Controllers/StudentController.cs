@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using Truextend.Test.StudentProject.Adapters;
+using Truextend.Test.StudentProject.BLL;
 using Truextend.Test.StudentProject.Models;
 
 namespace Truextend.Test.StudentProject.Controller
@@ -9,35 +12,38 @@ namespace Truextend.Test.StudentProject.Controller
     public class StudentController
     {
 
-        public List<Student> Students { get; set; }
-
+        private string csvFileName;
         private string nameFilter;
         private string typeFilter;
         private string genderFilter;
 
+        private StudentBLL studentLogic;
+
         public StudentController(List<string> parameters)
         {
-            this.Students = new List<Student>();
             ValidateParameters(parameters);
-            ReadCSVFile(parameters[0]);
+            studentLogic = new StudentBLL(new CSVStudentAdapter(this.csvFileName));
         }
 
         public void Search()
         {
             List<Student> result = new List<Student>();
 
-            if (string.IsNullOrEmpty(nameFilter))
+            if (!string.IsNullOrEmpty(nameFilter))
             {
-                result = Students.Where(s => s.Name.Contains(nameFilter)).OrderBy(s => s.Name).ToList();
+                result = studentLogic.GetStudents();
             }
-
             // Displaying Students
             DisplayStudents(result);
-            
         }
 
         private void DisplayStudents(List<Student> students)
         {
+            if (!students.Any())
+            {
+                Console.WriteLine("/////////// RESULTS NOT FOUND ");
+            }
+
             foreach (var currentStudent in students)
             {
                 Console.WriteLine("/////////// STUDENT ");
@@ -48,40 +54,7 @@ namespace Truextend.Test.StudentProject.Controller
             }
         }
 
-        private void ReadCSVFile(string csvFile)
-        {
-            string csvContent = File.ReadAllText("test.csv");
-            
-            foreach (string csvRow in csvContent.Split('\n'))
-            {
-                if (!string.IsNullOrEmpty(csvRow))
-                {
-                    var csvCells = csvRow.Split(',');
-                    Student newStudent = new Student();
-                    int i = 0;
-                    foreach (var cell in csvRow.Split(','))
-                    {
-                        switch (i) {
-                            case 0:
-                                newStudent.Type = cell;
-                                break;
-                            case 1:
-                                newStudent.Name = cell;
-                                break;
-                            case 2:
-                                newStudent.Gender = cell;
-                                break;
-                            case 3:
-                                newStudent.LastUpdate = DateTime.Parse(cell);
-                                break;
-                        }
-                        i++;
-                    }
 
-                    Students.Add(newStudent);
-                }
-            }
-        }
 
         private void ValidateParameters(List<string> parameters)
         {
@@ -107,7 +80,8 @@ namespace Truextend.Test.StudentProject.Controller
 
         private bool IsFilterValid(string filter)
         {
-            if (string.IsNullOrEmpty(filter)) {
+            if (string.IsNullOrEmpty(filter))
+            {
                 return true;
             }
 
@@ -140,6 +114,7 @@ namespace Truextend.Test.StudentProject.Controller
             var fileNameSplitted = csvFileName.Split('.');
             if (fileNameSplitted.Length == 2 && fileNameSplitted[1] == "csv")
             {
+                this.csvFileName = csvFileName;
                 return true;
             }
 
