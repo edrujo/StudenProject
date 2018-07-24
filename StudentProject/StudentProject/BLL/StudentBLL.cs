@@ -6,7 +6,6 @@ namespace Truextend.Test.StudentProject.BLL
 {
     public class StudentBLL
     {
-
         private IStudentAdapter StudentAdapter { get; set; }
 
         public StudentBLL(IStudentAdapter adapter)
@@ -19,6 +18,11 @@ namespace Truextend.Test.StudentProject.BLL
             return StudentAdapter.GetStudents();
         }
 
+        public List<Student> GetStudentByName(string name)
+        {
+            return StudentAdapter.GetStudentByName(name);
+        }
+
         public List<Student> GetStudentsByStudentType(string type)
         {
             return StudentAdapter.GetStudentsByStudentType(type);
@@ -26,6 +30,15 @@ namespace Truextend.Test.StudentProject.BLL
 
         public List<Student> GetStudentsByGenderAndType(string type, string gender)
         {
+            if (gender.ToLower().StartsWith("f"))
+            {
+                gender = "F";
+            }
+            else if (gender.ToLower().StartsWith("m"))
+            {
+                gender = "M";
+            }
+
             return StudentAdapter.GetStudentsByGenderAndType(type, gender);
         }
 

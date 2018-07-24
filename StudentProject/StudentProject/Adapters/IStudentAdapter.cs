@@ -6,6 +6,7 @@ namespace Truextend.Test.StudentProject.Adapters
     public interface IStudentAdapter : IAdapter<Student>
     {
         List<Student> GetStudents();
+        List<Student> GetStudentByName(string name);
         List<Student> GetStudentsByStudentType(string type);
         List<Student> GetStudentsByGenderAndType(string type, string gender);
     }

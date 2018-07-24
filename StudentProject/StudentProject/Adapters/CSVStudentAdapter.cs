@@ -44,14 +44,18 @@ namespace Truextend.Test.StudentProject.Adapters
         {
             return Students.OrderBy(s => s.Name).ToList();
         }
+        public List<Student> GetStudentByName(string name)
+        {
+            return Students.Where(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
 
         public List<Student> GetStudentsByStudentType(string type)
         {
-            return Students.Where(s => s.Type == type).OrderByDescending(s => s.LastUpdate).ToList();
+            return Students.Where(s => s.Type.Equals(type, StringComparison.OrdinalIgnoreCase)).OrderByDescending(s => s.LastUpdate).ToList();
         }
         public List<Student> GetStudentsByGenderAndType(string type, string gender)
         {
-            return Students.Where(s => s.Type == type && s.Gender == gender).OrderByDescending(s => s.LastUpdate).ToList();
+            return Students.Where(s => s.Type.Equals(type, StringComparison.OrdinalIgnoreCase) && s.Gender.Equals(gender, StringComparison.OrdinalIgnoreCase)).OrderByDescending(s => s.LastUpdate).ToList();
         }
 
         private void InitializeCollection()

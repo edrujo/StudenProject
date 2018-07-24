@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using Truextend.Test.StudentProject.Adapters;
 using Truextend.Test.StudentProject.BLL;
@@ -17,7 +15,7 @@ namespace Truextend.Test.StudentProject.Controller
         private string typeFilter;
         private string genderFilter;
 
-        private StudentBLL studentLogic;
+        private static StudentBLL studentLogic;
 
         public StudentController(List<string> parameters)
         {
@@ -31,8 +29,18 @@ namespace Truextend.Test.StudentProject.Controller
 
             if (!string.IsNullOrEmpty(nameFilter))
             {
-                result = studentLogic.GetStudents();
+                result = studentLogic.GetStudentByName(nameFilter);
             }
+            else if (!string.IsNullOrEmpty(typeFilter))
+            {
+                if (!string.IsNullOrEmpty(genderFilter)) {
+                    result = studentLogic.GetStudentsByGenderAndType(typeFilter, genderFilter);
+                } else {
+                    result = studentLogic.GetStudentsByStudentType(typeFilter);
+                }
+                
+            }
+
             // Displaying Students
             DisplayStudents(result);
         }
@@ -53,8 +61,6 @@ namespace Truextend.Test.StudentProject.Controller
                 Console.WriteLine(string.Format("/////////// Last Update: {0}", currentStudent.LastUpdate));
             }
         }
-
-
 
         private void ValidateParameters(List<string> parameters)
         {
